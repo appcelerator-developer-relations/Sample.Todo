@@ -1,12 +1,9 @@
 Titanium.UI.setBackgroundColor('#000');
 
-var todo = {};
-Ti.include(
-	'db.js',
-	'ui.js'
-);
+var db = require('db');
+var ui = require('ui');
 
-todo.db.createDb();
-
-var tabGroup = todo.ui.createAppTabGroup();
+db.createDb();
+var tabGroup = ui.createAppTabGroup();
 tabGroup.open();
+

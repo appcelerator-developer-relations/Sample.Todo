@@ -52,7 +52,11 @@ exports.getTableData = function(_done) {
 	for (var i = 0; i < todoItems.length; i++) {
 		row = Ti.UI.createTableViewRow({
 			id: todoItems[i].id,
-			title: todoItems[i].item
+			title: todoItems[i].item,
+			color: '#000',
+			font: {
+				fontWeight: 'bold'	
+			}
 		});
 		data.push(row);
 	}
@@ -63,7 +67,8 @@ exports.createAppTabGroup = function() {
 	var tabGroup = Titanium.UI.createTabGroup();
 	var win1 = Titanium.UI.createWindow({  
 	    title:'Todo',
-	    backgroundColor:'#fff'
+	    backgroundColor:'#fff',
+	    navBarHidden: false
 	});
 	var tab1 = Titanium.UI.createTab({  
 	    icon:'KS_nav_views.png',
@@ -71,14 +76,30 @@ exports.createAppTabGroup = function() {
 	    window:win1
 	});
 
-	var addBtn = Ti.UI.createButton({
-		title:'+'
-	});
-	addBtn.addEventListener('click', function() {
-		var addWin = exports.createAddWindow();
-		addWin.open();
-	});
-	win1.rightNavButton = addBtn;
+	// Create a native menu option to add a task for Android.
+	// Create a navigation bar button to do the same for iOS.
+	if (Ti.Platform.osname === 'android') {
+		win1.addEventListener('open', function() {
+			Ti.Android.currentActivity.onCreateOptionsMenu = function(e) {
+			    var menu = e.menu;
+			    var menuItem = menu.add({ title: "Add Task" });
+			    menuItem.setIcon("ic_menu_add.png");
+			    menuItem.addEventListener("click", function(e) {
+			        var addWin = exports.createAddWindow();
+					addWin.open();
+			    });
+			};
+		});
+	} else {
+		var addBtn = Ti.UI.createButton({
+			title:'+'
+		});
+		addBtn.addEventListener('click', function() {
+			var addWin = exports.createAddWindow();
+			addWin.open();
+		});
+		win1.rightNavButton = addBtn;
+	}
 
 	doTable = Ti.UI.createTableView();
 	doTable.setData(exports.getTableData(0));

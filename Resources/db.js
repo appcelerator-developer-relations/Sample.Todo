@@ -34,6 +34,6 @@ exports.updateItem = function(_id, _done) {
 
 exports.addItem = function(_item) {
 	var mydb = Ti.Database.open('mydb');
-	mydb.execute('insert into todo values (?,?,?)',dbid++,_item,0);
+	mydb.execute('insert into todo values (?,?,?)', dbid++, _item, 0);
 	mydb.close();
 };

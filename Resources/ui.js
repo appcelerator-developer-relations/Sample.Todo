@@ -1,7 +1,7 @@
 var db = require('db');
 var doTable, doneTable;
 
-exports.createAddWindow = function() {
+var createAddWindow = function() {
 	var win = Ti.UI.createWindow({
 		modal:true,
 		title:'Add Item',
@@ -23,14 +23,14 @@ exports.createAddWindow = function() {
 	});
 	btn.addEventListener('click', function() {
 		db.addItem(itemField.value);
-		doTable.setData(exports.getTableData(0));
+		doTable.setData(getTableData(0));
 		win.close();
 	});
 	win.add(btn);
 	return win;
 };
 
-exports.createConfirmDialog = function(_id, _title) {
+var createConfirmDialog = function(_id, _title) {
 	var confirm = Ti.UI.createAlertDialog({
 		title:'Mark As Done?',
 		message:_title,
@@ -39,14 +39,14 @@ exports.createConfirmDialog = function(_id, _title) {
 	confirm.addEventListener('click', function(evt) {			
 		if (evt.index === 1) {
 			db.updateItem(_id, 1);
-			doTable.setData(exports.getTableData(0));
-			doneTable.setData(exports.getTableData(1));
+			doTable.setData(getTableData(0));
+			doneTable.setData(getTableData(1));
 		}
 	});
 	return confirm;
 };
 
-exports.getTableData = function(_done) {
+var getTableData = function(_done) {
 	var data = [], row = null;
 	var todoItems = db.selectItems(_done);
 	for (var i = 0; i < todoItems.length; i++) {
@@ -85,8 +85,7 @@ exports.createAppTabGroup = function() {
 			    var menuItem = menu.add({ title: "Add Task" });
 			    menuItem.setIcon("ic_menu_add.png");
 			    menuItem.addEventListener("click", function(e) {
-			        var addWin = exports.createAddWindow();
-					addWin.open();
+			        createAddWindow().open();
 			    });
 			};
 		});
@@ -95,17 +94,15 @@ exports.createAppTabGroup = function() {
 			title:'+'
 		});
 		addBtn.addEventListener('click', function() {
-			var addWin = exports.createAddWindow();
-			addWin.open();
+			createAddWindow().open();
 		});
 		win1.rightNavButton = addBtn;
 	}
 
 	doTable = Ti.UI.createTableView();
-	doTable.setData(exports.getTableData(0));
+	doTable.setData(getTableData(0));
 	doTable.addEventListener('click', function(e) {
-		var confirm = exports.createConfirmDialog(e.source.id, e.source.title);
-		confirm.show();
+		createConfirmDialog(e.source.id, e.source.title).show();
 	});
 
 	win1.add(doTable);
@@ -120,7 +117,7 @@ exports.createAppTabGroup = function() {
 	    window:win2
 	});
 	doneTable = Ti.UI.createTableView();
-	doneTable.setData(exports.getTableData(1));
+	doneTable.setData(getTableData(1));
 	win2.add(doneTable);
 
 	tabGroup.addTab(tab1);  

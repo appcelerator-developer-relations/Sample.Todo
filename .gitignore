@@ -6,3 +6,4 @@ build/android/*
 !build/android/.gitignore
 .settings
 build.log
+.fastdev.lock

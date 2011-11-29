@@ -6,6 +6,7 @@ This is a Titanium Mobile sample app that creates a basic todo list. With this a
 
 * Local storage with SQLite via `Titanium.Database`
 * Modular Javascript with CommonJS
+* Multiple window app using a single execution context
 * Native UI features
   * Android menus
   * iOS navigation bar buttons

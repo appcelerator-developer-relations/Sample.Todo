@@ -15,7 +15,8 @@ exports.AddWindow = function() {
 	var btn = Ti.UI.createButton({
 		title: 'Add',
 		width: '300dp',
-		height: '40dp'
+		height: '40dp',
+		top: '80dp'
 	});
 	btn.addEventListener('click', function() {
 		db.addItem(itemField.value);

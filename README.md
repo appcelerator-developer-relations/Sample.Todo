@@ -1,18 +1,23 @@
-Welcome to your Appcelerator Titanium Mobile Project
+# Sample.Todo
 
-This is a blank project.  Start by editing your application's app.js to 
-make your first mobile project using Titanium.
+This is a Titanium Mobile sample app that creates a basic todo list. With this app you can maintain a listing of tasks to be completed, add to that list, and mark tasks as **done**. 
 
+### Topics Covered
 
+* Local storage with SQLite via `Titanium.Database`
+* Modular Javascript with CommonJS
+* Multiple window app using a single execution context
+* Native UI features
+  * Android menus
+  * iOS navigation bar buttons
+* Cross-platform design
 
-----------------------------------
-Stuff our legal folk make us say:
+### SQL for pre-populated todo.sqlite file
 
-Appcelerator, Appcelerator Titanium and associated marks and logos are 
-trademarks of Appcelerator, Inc. 
-
-Titanium is Copyright (c) 2009-2010 by Appcelerator, Inc. All Rights Reserved.
-
-Titanium is licensed under the Apache Public License (Version 2). Please
-see the LICENSE file for the full license.
-
+```
+create table if not exists todo (item text, done integer);
+insert into todo (item,done) values ('Pick Up Laundry',0);
+insert into todo (item,done) values ('Go Food Shopping',0);
+insert into todo (item,done) values ('Call Mom',0);
+insert into todo (item,done) values ('Sleep',1);
+```

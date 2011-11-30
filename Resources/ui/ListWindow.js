@@ -11,7 +11,7 @@ exports.ListWindow = function(args) {
 	if (!isDone) {
 		if (Ti.Platform.osname === 'android') {
 			self.addEventListener('open', function() {
-				self.activity.onCreateOptionsMenu = function(e) {
+				Ti.Android.currentActivity.onCreateOptionsMenu = function(e) {
 				    var menu = e.menu;
 				    var menuItem = menu.add({ title: "Add Task" });
 				    menuItem.setIcon("images/ic_menu_add.png");

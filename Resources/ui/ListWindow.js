@@ -2,25 +2,14 @@
 exports.ListWindow = function(args) {
 	var AddWindow = require('ui/AddWindow').AddWindow;
 	var self = Ti.UI.createWindow(args);
-	var isDone = args.isDone;
 	var tableview = Ti.UI.createTableView();
+	var isDone = args.isDone;
 	
 	tableview.setData(getTableData(isDone));
 	self.add(tableview);
 	
 	if (!isDone) {
-		if (Ti.Platform.osname === 'android') {
-			self.addEventListener('open', function() {
-				Ti.Android.currentActivity.onCreateOptionsMenu = function(e) {
-				    var menu = e.menu;
-				    var menuItem = menu.add({ title: "Add Task" });
-				    menuItem.setIcon("images/ic_menu_add.png");
-				    menuItem.addEventListener("click", function(e) {
-				        new AddWindow().open();
-				    });
-				};
-			});
-		} else {
+		if (Ti.Platform.osname !== 'android') {
 			var addBtn = Ti.UI.createButton({
 				title:'+'
 			});

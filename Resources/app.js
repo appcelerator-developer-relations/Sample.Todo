@@ -5,8 +5,10 @@ var globals = {};
 //create a private scope to prevent further polluting the global object
 (function() {
 	var AppTabGroup = require('ui/AppTabGroup').AppTabGroup,
-		ListWindow = require('ui/ListWindow').ListWindow;
+		ListWindow = require('ui/ListWindow').ListWindow,
+		AddWindow = require('ui/AddWindow').AddWindow;
 	
+	// Initialize local storage
 	require('db').createDb();
 	
 	//create our global tab group	
@@ -18,7 +20,17 @@ var globals = {};
 				title: 'Todo',
 				backgroundColor: '#fff',
 				navBarHidden: false,
-				isDone: 0
+				isDone: 0,
+				activity: {
+					onCreateOptionsMenu: function(e) {
+						var menu = e.menu;
+					    var menuItem = menu.add({ title: "Add Task" });
+					    menuItem.setIcon("images/ic_menu_add.png");
+					    menuItem.addEventListener("click", function(e) {
+					        new AddWindow().open();
+					    });
+					}
+				}
 			})
 		},
 		{

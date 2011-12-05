@@ -29,3 +29,9 @@ exports.addItem = function(_item) {
 	mydb.execute('insert into todo values (?,?)', _item, 0);
 	mydb.close();
 };
+
+exports.deleteItem = function(_id) {
+	var mydb = Ti.Database.open(DATABASE_NAME);
+	mydb.execute('delete from todo where ROWID = ?', _id);
+	mydb.close();
+};

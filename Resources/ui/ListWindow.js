@@ -18,10 +18,11 @@ exports.ListWindow = function(args) {
 			});
 			self.rightNavButton = addBtn;
 		}
-		tableview.addEventListener('click', function(e) {
-			createConfirmDialog(e.source.id, e.source.title).show();
-		});
 	}
+	
+	tableview.addEventListener('click', function(e) {
+		createConfirmDialog(e.source.id, e.source.title, isDone).show();
+	});
 	
 	Ti.App.addEventListener('app:updateTables', function() {
 		tableview.setData(getTableData(isDone));
@@ -50,18 +51,37 @@ var getTableData = function(done) {
 	return data;
 };
 
-var createConfirmDialog = function(id, title) {
+var createConfirmDialog = function(id, title, isDone) {
 	var db = require('db');
+	var buttons, doneIndex, clickHandler;
+	
+	if (isDone) {
+		buttons = ['Delete', 'Cancel'];	
+		clickHandler = function(e) {
+			if (e.index === 0) {
+				db.deleteItem(id);
+				Ti.App.fireEvent('app:updateTables');
+			}
+		};
+	} else {
+		buttons = ['Done', 'Delete', 'Cancel'];
+		clickHandler = function(e) {
+			if (e.index === 0) {
+				db.updateItem(id, 1);
+				Ti.App.fireEvent('app:updateTables');
+			} else if (e.index === 1) {
+				db.deleteItem(id);
+				Ti.App.fireEvent('app:updateTables');
+			}
+		};
+	}
+	
 	var confirm = Ti.UI.createAlertDialog({
-		title: 'Mark As Done?',
+		title: 'Change Task Status',
 		message: title,
-		buttonNames: ['Cancel','OK']
+		buttonNames: buttons
 	});
-	confirm.addEventListener('click', function(evt) {			
-		if (evt.index === 1) {
-			db.updateItem(id, 1);
-			Ti.App.fireEvent('app:updateTables');
-		}
-	});
+	confirm.addEventListener('click', clickHandler);
+	
 	return confirm;
 };

@@ -55,7 +55,7 @@ var createConfirmDialog = function(id, title) {
 	var confirm = Ti.UI.createAlertDialog({
 		title: 'Mark As Done?',
 		message: title,
-		buttonNames: ['Umm, No','Ok']
+		buttonNames: ['Cancel','OK']
 	});
 	confirm.addEventListener('click', function(evt) {			
 		if (evt.index === 1) {

@@ -1,9 +1,6 @@
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');
 }
-else if (Ti.Platform.osname === 'mobileweb') {
-	alert('Mobile web is not yet supported by this template');
-}
 else {
 	//add a single variable to the global scope to which we may choose to
 	//intentionally add items to
@@ -51,7 +48,7 @@ else {
 				})
 			}
 		);
-	
+		
 		globals.tabs.open();
 	})();
 }

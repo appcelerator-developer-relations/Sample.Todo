@@ -36,5 +36,8 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+    	<theme>default</theme>
+    </mobileweb>
     <modules/>
 </ti:app>

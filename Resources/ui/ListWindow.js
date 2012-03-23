@@ -1,3 +1,5 @@
+var platform = Ti.Platform.osname;
+
 //A window object which will be associated with the stack of windows
 exports.ListWindow = function(args) {
 	var AddWindow = require('ui/AddWindow').AddWindow;
@@ -6,22 +8,37 @@ exports.ListWindow = function(args) {
 	var isDone = args.isDone;
 	
 	tableview.setData(getTableData(isDone));
-	self.add(tableview);
+	
+	// Need to add a special 'add' button in the 'Todo' window for Mobile Web
+	if (isDone || platform !== 'mobileweb') {
+		self.add(tableview);
+	}
 	
 	if (!isDone) {
-		if (Ti.Platform.osname !== 'android') {
+		if (platform !== 'android') {
 			var addBtn = Ti.UI.createButton({
 				title:'+'
 			});
 			addBtn.addEventListener('click', function() {
 				new AddWindow().open();
 			});
-			self.rightNavButton = addBtn;
+			if (platform === 'mobileweb') {
+				self.layout = 'vertical';
+				addBtn.height = 40;
+				addBtn.width = 40;
+				addBtn.top = 0;
+				addBtn.right = 10;
+				self.add(addBtn);
+				self.add(tableview);
+			}
+			else{
+				self.rightNavButton = addBtn;
+			}
 		}
 	}
 	
 	tableview.addEventListener('click', function(e) {
-		createConfirmDialog(e.source.id, e.source.title, isDone).show();
+		createConfirmDialog(e.row.id, e.row.title, isDone).show();
 	});
 	
 	Ti.App.addEventListener('app:updateTables', function() {
@@ -59,7 +76,7 @@ var createConfirmDialog = function(id, title, isDone) {
 		buttons = ['Delete', 'Cancel'];	
 		clickHandler = function(e) {
 			if (e.index === 0) {
-				db.deleteItem(id);
+				deleteItem(db, id, isDone);
 				Ti.App.fireEvent('app:updateTables');
 			}
 		};
@@ -70,7 +87,7 @@ var createConfirmDialog = function(id, title, isDone) {
 				db.updateItem(id, 1);
 				Ti.App.fireEvent('app:updateTables');
 			} else if (e.index === 1) {
-				db.deleteItem(id);
+				deleteItem(db, id, isDone);
 				Ti.App.fireEvent('app:updateTables');
 			}
 		};
@@ -84,4 +101,13 @@ var createConfirmDialog = function(id, title, isDone) {
 	confirm.addEventListener('click', clickHandler);
 	
 	return confirm;
+};
+
+var deleteItem = function(db, id, isDone) {
+	if (platform === 'mobileweb') {
+		db.deleteItem(id, isDone);
+	}
+	else {
+		db.deleteItem(id);
+	}
 };

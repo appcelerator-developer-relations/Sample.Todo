@@ -9,7 +9,7 @@
         <target device="blackberry">false</target>
     </deployment-targets>
     <id>com.appcelerator.sample.todo</id>
-    <name>Sample.Todo</name>
+    <name>Todo List</name>
     <version>1.0</version>
     <publisher>tlukasavage</publisher>
     <url>http://appcelerator.com</url>

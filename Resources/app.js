@@ -14,7 +14,7 @@ else {
 		
 		// Initialize local storage
 		require('db').createDb();
-		
+
 		//create our global tab group	
 		globals.tabs = new AppTabGroup(
 			{
@@ -24,17 +24,7 @@ else {
 					title: 'Todo',
 					backgroundColor: '#fff',
 					navBarHidden: false,
-					isDone: 0,
-					activity: {
-						onCreateOptionsMenu: function(e) {
-							var menu = e.menu;
-						    var menuItem = menu.add({ title: "Add Task" });
-						    menuItem.setIcon("images/ic_menu_add.png");
-						    menuItem.addEventListener("click", function(e) {
-						        new AddWindow().open();
-						    });
-						}
-					}
+					isDone: 0
 				})
 			},
 			{
@@ -49,6 +39,23 @@ else {
 			}
 		);
 		
+		if (Ti.Platform.name === "android") {
+			globals.tabs.addEventListener("open", function(e) {
+				var activity = globals.tabs.getActivity();
+				activity.onCreateOptionsMenu = function(e) {
+					var menu = e.menu;
+					var menuItem = menu.add({
+						title : "Add Task",
+						icon : "images/ic_menu_add.png",
+						showAsAction : Ti.Android.SHOW_AS_ACTION_ALWAYS
+						});
+					menuItem.addEventListener("click", function(e) {
+						new AddWindow().open();
+						});
+				}
+			})
+		}
+
 		globals.tabs.open();
 	})();
 }

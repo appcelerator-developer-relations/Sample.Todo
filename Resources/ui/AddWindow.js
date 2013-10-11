@@ -16,7 +16,7 @@ exports.AddWindow = function() {
 	itemField.addEventListener('return', function(e) {
 		addTask(itemField.value, self);
 	});
-	
+
 	var addButton = Ti.UI.createButton({
 		title: 'Add',
 		width: '300dp',
@@ -26,7 +26,7 @@ exports.AddWindow = function() {
 	addButton.addEventListener('click', function() {
 		addTask(itemField.value, self);
 	});
-	
+
 	var cancelButton = Ti.UI.createButton({
 		title: 'Cancel',
 		width: '300dp',
@@ -36,20 +36,20 @@ exports.AddWindow = function() {
 	cancelButton.addEventListener('click', function(e) {
 		self.close();
 	});
-	
+
 	self.add(itemField);
 	self.add(addButton);
 	self.add(cancelButton);
-	
+
 	return self;
 };
 
 var addTask = function(value, win) {
 	if (value === '') {
 		alert('Please enter a task first');
-		return;	
+		return;
 	}
-	
+
 	require('db').addItem(value);
 	Ti.App.fireEvent('app:updateTables');
 	win.close();

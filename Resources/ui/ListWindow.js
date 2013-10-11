@@ -6,14 +6,14 @@ exports.ListWindow = function(args) {
 	var self = Ti.UI.createWindow(args);
 	var tableview = Ti.UI.createTableView();
 	var isDone = args.isDone;
-	
+
 	tableview.setData(getTableData(isDone));
-	
+
 	// Need to add a special 'add' button in the 'Todo' window for Mobile Web
 	if (isDone || platform !== 'mobileweb') {
 		self.add(tableview);
 	}
-	
+
 	if (!isDone) {
 		if (platform !== 'android') {
 			var addBtn = Ti.UI.createButton({
@@ -36,15 +36,15 @@ exports.ListWindow = function(args) {
 			}
 		}
 	}
-	
+
 	tableview.addEventListener('click', function(e) {
 		createConfirmDialog(e.row.id, e.row.title, isDone).show();
 	});
-	
+
 	Ti.App.addEventListener('app:updateTables', function() {
 		tableview.setData(getTableData(isDone));
 	});
-	
+
 	return self;
 };
 
@@ -53,14 +53,14 @@ var getTableData = function(done) {
 	var data = [];
 	var row = null;
 	var todoItems = db.selectItems(done);
-	
+
 	for (var i = 0; i < todoItems.length; i++) {
 		row = Ti.UI.createTableViewRow({
 			id: todoItems[i].id,
 			title: todoItems[i].item,
 			color: '#000',
 			font: {
-				fontWeight: 'bold'	
+				fontWeight: 'bold'
 			}
 		});
 		data.push(row);
@@ -71,9 +71,9 @@ var getTableData = function(done) {
 var createConfirmDialog = function(id, title, isDone) {
 	var db = require('db');
 	var buttons, doneIndex, clickHandler;
-	
+
 	if (isDone) {
-		buttons = ['Delete', 'Cancel'];	
+		buttons = ['Delete', 'Cancel'];
 		clickHandler = function(e) {
 			if (e.index === 0) {
 				deleteItem(db, id, isDone);
@@ -92,14 +92,14 @@ var createConfirmDialog = function(id, title, isDone) {
 			}
 		};
 	}
-	
+
 	var confirm = Ti.UI.createAlertDialog({
 		title: 'Change Task Status',
 		message: title,
 		buttonNames: buttons
 	});
 	confirm.addEventListener('click', clickHandler);
-	
+
 	return confirm;
 };
 

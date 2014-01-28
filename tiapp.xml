@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <sdk-version>3.1.3.GA</sdk-version>
+    <sdk-version>3.2.0.GA</sdk-version>
     <deployment-targets>
         <target device="mobileweb">true</target>
         <target device="iphone">true</target>
@@ -14,7 +14,7 @@
     <publisher>tlukasavage</publisher>
     <url>http://appcelerator.com</url>
     <description>not specified</description>
-    <copyright>2011 by tlukasavage</copyright>
+    <copyright>2011-2014 by tlukasavage</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>

@@ -9,7 +9,7 @@ exports.createDb = function() {
 	var list = {
 		todoList: ['Pick up groceries', 'Sleep', 'Take out the garbage', 'Make dinner'],
 		doneList: ['Create a Titanium app']
-	}
+	};
 	Ti.App.Properties.setString(DATABASE_NAME, JSON.stringify(list));
 };
 

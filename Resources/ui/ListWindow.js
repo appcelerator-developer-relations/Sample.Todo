@@ -60,7 +60,8 @@ var getTableData = function(done) {
 			title: todoItems[i].item,
 			color: '#000',
 			font: {
-				fontWeight: 'bold'
+				fontWeight: 'bold',
+				fontSize: '14dp'
 			}
 		});
 		data.push(row);

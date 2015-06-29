@@ -11,7 +11,8 @@ exports.AddWindow = function() {
 		top: '20dp',
 		hintText: 'New Item',
 		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
-		returnKeyType: Ti.UI.RETURNKEY_DONE
+		returnKeyType: Ti.UI.RETURNKEY_DONE,
+		color: '#000'
 	});
 	itemField.addEventListener('return', function(e) {
 		addTask(itemField.value, self);

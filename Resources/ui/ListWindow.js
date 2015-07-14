@@ -15,7 +15,17 @@ exports.ListWindow = function(args) {
 	}
 
 	if (!isDone) {
-		if (platform !== 'android') {
+
+		if (platform === 'windowsphone' || platform === 'windowsstore') {
+			var commandBar = Ti.UI.Windows.createCommandBar();
+			var addButton = Ti.UI.Windows.createAppBarButton({ icon: Ti.UI.Windows.SystemIcon.ADD });
+			addButton.addEventListener('click', function () {
+				new AddWindow().open();
+			});
+			commandBar.items = [ addButton ];
+			self.add(commandBar);
+		}
+		else if (platform !== 'android') {
 			var addBtn = Ti.UI.createButton({
 				title:'+'
 			});

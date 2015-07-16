@@ -6,6 +6,8 @@ else {
 	//intentionally add items to
 	var globals = {};
 
+	var isWindows = (Ti.Platform.osname === "windowsphone" || Ti.Platform.osname === "windowsstore");
+
 	//create a private scope to prevent further polluting the global object
 	(function() {
 		var AppTabGroup = require('ui/AppTabGroup').AppTabGroup,
@@ -22,7 +24,7 @@ else {
 				icon: 'images/KS_nav_ui.png',
 				window: new ListWindow({
 					title: 'Todo',
-					backgroundColor: '#fff',
+					backgroundColor: isWindows ? '#000' : '#fff',
 					navBarHidden: false,
 					isDone: 0,
 					activity: {
@@ -42,7 +44,7 @@ else {
 				icon: 'images/KS_nav_views.png',
 				window: new ListWindow({
 					title: 'Done',
-					backgroundColor: '#fff',
+					backgroundColor: isWindows ? '#000' : '#fff',
 					navBarHidden: false,
 					isDone: 1
 				})

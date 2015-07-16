@@ -1,9 +1,12 @@
 exports.AddWindow = function() {
+
+	var isWindows = (Ti.Platform.osname === "windowsphone" || Ti.Platform.osname === "windowsstore");
+
 	var db = require('db');
 	var self = Ti.UI.createWindow({
 		modal: true,
 		title: 'Add Item',
-		backgroundColor: '#fff'
+		backgroundColor: isWindows ? '#000' : '#fff'
 	});
 	var itemField = Ti.UI.createTextField({
 		width: '300dp',
